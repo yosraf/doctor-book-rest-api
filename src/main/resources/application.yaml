@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: gestion-praticien
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gestionParticien
+    username: postgres
+    driver-class-name: org.postgresql.Driver
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db/liquibase-changelog.xml
+    enabled: true
+
+server:
+  port: 8020
+

@@ -1,0 +1,157 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="10001" author="yosra">
+        <createSequence
+                incrementBy="1"
+                minValue="1"
+                schemaName="public"
+                sequenceName="langue_seq"
+                startValue="1"/>
+        <createSequence
+                incrementBy="1"
+                minValue="1"
+                schemaName="public"
+                sequenceName="particien_seq"
+                startValue="1"/>
+        <createSequence
+                incrementBy="1"
+                minValue="1"
+                schemaName="public"
+                sequenceName="address_seq"
+                startValue="1"/>
+    </changeSet>
+    <changeSet id="10002" author="yosra">
+
+        <createTable tableName="particiens">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="phone" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="birth_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+    </changeSet>
+
+    <changeSet id="10003" author="yosra">
+        <createTable tableName="langues">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="libelle" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+
+    </changeSet>
+
+    <changeSet id="10004" author="yosra">
+        <createTable tableName="adresses">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ville" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="particien_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="particien_id" baseTableName="adresses"
+                                 constraintName="fk_particien_id"
+                                 referencedColumnNames="id" referencedTableName="particiens"/>
+
+
+    </changeSet>
+
+
+    <changeSet id="10005" author="yosra">
+        <createTable tableName="particien_langue">
+            <column name="particien_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="langue_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="particien_id" baseTableName="particien_langue"
+                                 constraintName="fk_p_id"
+                                 referencedColumnNames="id" referencedTableName="particiens"/>
+        <addForeignKeyConstraint baseColumnNames="langue_id" baseTableName="particien_langue"
+                                 constraintName="fk_langue_id"
+                                 referencedColumnNames="id" referencedTableName="langues"/>
+
+
+    </changeSet>
+    <changeSet id="10006" author="yosra">
+        <createTable tableName="particien_specialite">
+            <column name="particien_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom_specialite" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="particien_id" baseTableName="particien_specialite"
+                                 constraintName="fk_particien_specialite_id"
+                                 referencedColumnNames="id" referencedTableName="particiens"/>
+
+    </changeSet>
+</databaseChangeLog>
